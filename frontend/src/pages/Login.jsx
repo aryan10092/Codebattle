@@ -105,7 +105,7 @@ function Login() {
 
             <Button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
+              className="w-full cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
               disabled={loading}
             >
               {loading ? "Logging in..." : "Login"}
