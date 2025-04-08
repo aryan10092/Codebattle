@@ -37,10 +37,10 @@ const io = new Server(server);
 //   res.sendFile(path.join(__dirname1, "frontend","dist","index.html"));
 // });
 
-app.use(express.static("../frontend/dist"))
-app.use( (req, res) => {
-     res.sendFile(path.join(__dirname,  '../../CODEBATTLE/frontend/dist/index.html'));
-   })
+//app.use(express.static("../frontend/dist"))
+//app.use( (req, res) => {
+  //   res.sendFile(path.join(__dirname,  '../../CODEBATTLE/frontend/dist/index.html'));
+ // })
 
 server.on('error', (error) => {
   console.error('Server error:', error);
