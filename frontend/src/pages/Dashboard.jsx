@@ -596,7 +596,7 @@ console.log("scores",scores)
                 <div className="grid grid-cols-1 gap-2">
                   <Button 
                     onClick={() => setDifficulty('easy')}
-                    className={`w-full transition-all duration-200 ${
+                    className={`w-full cursor-pointer transition-all duration-200 ${
                       difficulty === 'easy' 
                         ? 'bg-green-500 hover:bg-green-600 border-green-400 text-white shadow-lg shadow-green-500/20' 
                         : 'bg-[#1a1a2e] hover:bg-[#16213e] text-blue-200 border border-blue-500/20'
@@ -606,7 +606,7 @@ console.log("scores",scores)
                   </Button>
                   <Button 
                     onClick={() => setDifficulty('medium')}
-                    className={`w-full transition-all duration-200 ${
+                    className={`w-full cursor-pointer transition-all duration-200 ${
                       difficulty === 'medium' 
                         ? 'bg-yellow-500 hover:bg-yellow-600 text-white shadow-lg shadow-yellow-500/20' 
                         : 'bg-[#1a1a2e] hover:bg-[#16213e] text-blue-200 border border-blue-500/20'
@@ -615,7 +615,7 @@ console.log("scores",scores)
                     Medium   </Button>
                   <Button 
                     onClick={() => setDifficulty('hard')}
-                    className={`w-full transition-all duration-200 ${
+                    className={`w-full cursor-pointer transition-all duration-200 ${
                       difficulty === 'hard' 
                         ? 'bg-red-500 bprder-red-400 hover:bg-red-600 text-white shadow-lg shadow-red-500/20' 
                         : 'bg-[#1a1a2e] hover:bg-[#16213e] text-blue-200 border border-blue-500/20'
@@ -627,7 +627,7 @@ console.log("scores",scores)
                 <Button
                   onClick={fetchRandomChallenge}
                   disabled={generating}
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white
+                  className="w-full cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white
                    shadow-lg shadow-purple-500/20 transition-all duration-200"
                 >
                   Generate
@@ -698,7 +698,7 @@ console.log("scores",scores)
                     <Button
                       onClick={handleReady}
                       disabled={hasSubmitted}
-                      className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
+                      className="cursor-pointer bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700
                        text-white shadow-lg shadow-blue-500/20 transition-all duration-200"
                       size="sm"
                     >
@@ -735,7 +735,7 @@ console.log("scores",scores)
                     <Button
                       onClick={handlesubmit}
                       disabled={hasSubmitted || isSubmitting}
-                      className={`bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white 
+                      className={`cursor-pointer bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white 
                         shadow-lg shadow-green-500/20 transition-all duration-200 ${
                         isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
                       }`}
@@ -805,7 +805,7 @@ console.log("scores",scores)
             </div>
             <Button
               onClick={() => navigate('/')}
-              className="w-full mt-4 bg-gradient-to-r from-blue-500 to-purple-500"
+              className="w-full cursor-pointer mt-4 bg-gradient-to-r from-blue-500 to-purple-500"
             >
               Return to Home
             </Button>
