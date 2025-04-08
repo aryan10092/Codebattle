@@ -339,7 +339,7 @@ console.log("scores",scores)
         // });
         
         socketref.current.on('opponent_ready', ({ message }) => {
-          setOpponentSubmitted(true);
+          
           toast(message);
         });
       } catch (error) {
