@@ -15,6 +15,7 @@ function Signup() {
     confirmPassword: ''
   });
   const [loading, setLoading] = useState(false);
+  
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -47,6 +48,7 @@ function Signup() {
      
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
+        //toast()
         toast.success("Account created successfully!");
         
         navigate('/join');
@@ -60,20 +62,24 @@ function Signup() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a1a2e] to-[#16213e] flex items-center justify-center p-4">
+      
       <Card className="w-full max-w-md bg-[#0f3460] border-blue-500/20">
         <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
+         <div className="flex justify-center mb-4">
             <div className="bg-blue-500/20 p-4 rounded-full">
               <User className="h-12 w-12 text-blue-400" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 
+            bg-clip-text text-transparent">
             Create Account
           </CardTitle>
+          
           <CardDescription className="text-blue-200">
             Join the coding battle community
-          </CardDescription>
+       </CardDescription>
         </CardHeader>
+        
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
