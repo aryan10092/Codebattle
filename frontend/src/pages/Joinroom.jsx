@@ -81,7 +81,7 @@ function Joinroom() {
                 {roomid && (
                   <button
                     onClick={copyToClipboard}
-                    className="absolute right-3 top-3 text-blue-400 hover:text-blue-300"
+                    className="cursor-pointer absolute right-3 top-3 text-blue-400 hover:text-blue-300"
                   >
                     <Copy className="h-4 w-4" />
                   </button>
@@ -93,7 +93,7 @@ function Joinroom() {
           <div className="flex flex-col gap-4">
             <Button
               onClick={createid}
-              className="w-full bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
+              className="w-full cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
             >
               <Sparkles className="mr-2 h-4 w-4" />
               Generate New Room
@@ -101,7 +101,7 @@ function Joinroom() {
 
             <Button
               onClick={joinroom}
-              className="w-full bg-[#1a1a2e] border border-blue-500/20 text-blue-200 hover:bg-blue-500/20"
+              className="w-full cursor-pointer bg-[#1a1a2e] border border-blue-500/20 text-blue-200 hover:bg-blue-500/20"
             >
               Join Room
             </Button>
