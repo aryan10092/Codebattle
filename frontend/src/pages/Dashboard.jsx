@@ -258,7 +258,7 @@ console.log("scores",scores)
 
         socketref.current.on('prepare_next_round', ({ round, maxRounds, startTime, duration }) => {
           setRoundInfo({ current: round, max: maxRounds });
-          setTimeLeft(null);
+          setTimeLeft(300);
           setHasSubmitted(false);
           setIsSubmitting(false);
           setOpponentSubmitted(false);
@@ -278,6 +278,10 @@ console.log("scores",scores)
           setGameOver(true);
           setFinalResults(results);
           setTimeLeft(null);
+              if (window.timerInterval) {
+            clearInterval(window.timerInterval);
+          }
+          setTimeLeft(0);
         });
 
         socketref.current.on('error', ({ message }) => {
@@ -354,6 +358,9 @@ console.log("scores",scores)
 
     
     return () => {
+         if (window.timerInterval) {
+        clearInterval(window.timerInterval);
+      }
       if (socketref.current) {
         socketref.current.disconnect();
       }
@@ -384,27 +391,36 @@ console.log("scores",scores)
       clearInterval(window.timerInterval);
     }
 
-    const endTime = startTime + duration;
-    const updateTimer = () => {
-      const now = Date.now();
-      const remaining = Math.max(0, endTime - now);
-      setTimeLeft(remaining);
+    // const endTime = startTime + duration;
+    // const updateTimer = () => {
+    //   const now = Date.now();
+    //   const remaining = Math.max(0, endTime - now);
+      setTimeLeft(300);
 
-      if (remaining > 0) {
-        setTimeout(updateTimer, 1000);
-        window.timerInterval = setTimeout(updateTimer, 1000);
-      } else {
-        setTimeLeft(0);
-        clearInterval(window.timerInterval);
-      }
-    };
-    updateTimer();
+    //   if (remaining > 0) {
+    //     setTimeout(updateTimer, 1000);
+    //     window.timerInterval = setTimeout(updateTimer, 1000);
+    //   } else {
+    //     setTimeLeft(0);
+    //     clearInterval(window.timerInterval);
+    //   }
+    // };
+    // updateTimer();
+      window.timerInterval = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(window.timerInterval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
   };
 
-  const formatTime = (ms) => {
-    const minutes = Math.floor(ms / 60000);
-    const seconds = Math.floor((ms % 60000) / 1000);
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
   const handlesubmit = async () => {
@@ -472,7 +488,7 @@ console.log("scores",scores)
         if (window.timerInterval) {
           clearInterval(window.timerInterval);
         }
-        setTimeLeft(null)
+        setTimeLeft(300)
         setHasSubmitted(false);
        //setWaitingForResult(false);
        setIsSubmitting(false);
