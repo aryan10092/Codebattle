@@ -26,7 +26,7 @@ function Home() {
           <div className="flex gap-4 justify-center">
             <Button 
               onClick={() => navigate('/join')}
-              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600
+              className="cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600
               text-white px-8 py-6 text-lg"
             >
               Start Battle  </Button>
@@ -180,7 +180,7 @@ function Home() {
           </p>
           <Button 
             onClick={() => navigate('/join')}
-            className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-6 text-lg"
+            className="cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-6 text-lg"
           >
             Start Coding Battle
           </Button>
