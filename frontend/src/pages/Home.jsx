@@ -2,6 +2,7 @@ import React from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Code2, Trophy, Timer, Users, Zap, Sparkles } from "lucide-react"
+
 import { useNavigate } from 'react-router-dom'
 
 function Home() {
@@ -9,34 +10,38 @@ function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a1a2e] to-[#16213e] text-white">
-      {/* Hero Section */}
+      
       <div className="container mx-auto px-4 py-20">
-        <div className="text-center max-w-3xl mx-auto">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
-            Code Battle
-          </h1>
+      <div className="text-center max-w-3xl mx-auto">
+        
+          <h1 className="text-5xl md:text-6xl font-bold
+            mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+            Code Battle </h1>
+        
           <p className="text-xl text-blue-200 mb-8">
             Challenge your coding skills in real-time battles against other developers. 
             Solve problems, compete, and climb the leaderboard!
-          </p>
+       </p>
+        
           <div className="flex gap-4 justify-center">
             <Button 
               onClick={() => navigate('/join')}
-              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white px-8 py-6 text-lg"
+              className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600
+              text-white px-8 py-6 text-lg"
             >
-              Start Battle
-            </Button>
+              Start Battle  </Button>
           
-          </div>
-        </div>
+          </div> </div>
       </div>
 
-      {/* Features Section */}
+      
       <div className="container mx-auto px-4 py-3.5">
+        
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
             Why Choose Code Battle?
           </h2>
+          
           <p className="text-xl text-blue-200 max-w-2xl mx-auto">
             Experience the thrill of competitive coding with our unique features designed to enhance your programming skills
           </p>
@@ -122,13 +127,13 @@ function Home() {
                 </ul>
               </CardDescription>
             </CardHeader>
-          </Card>
+         </Card>
         </div>
 
       
       </div>
 
-      {/* How It Works Section */}
+      
       <div className="container mx-auto px-4 py-10">
         <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -166,7 +171,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Call to Action Section */}
+      
       <div className="container mx-auto px-4 py-16">
         <div className="bg-[#0f3460] rounded-lg p-12 text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to Battle?</h2>
