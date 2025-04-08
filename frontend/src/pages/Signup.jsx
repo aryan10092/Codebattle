@@ -41,13 +41,14 @@ function Signup() {
         email: formData.email,
         password: formData.password
       });
-
+   //console.log(response.data)
+      
       if (response.data.success) {
-        // Store the token and user data in localStorage
+     
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
         toast.success("Account created successfully!");
-        // Navigate directly to joinroom page
+        
         navigate('/join');
       }
     } catch (error) {
