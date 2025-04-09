@@ -9,10 +9,12 @@ import axios from 'axios'
 function Home() {
   const navigate = useNavigate();
 
-   useEffect(async() => {
-   const res=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/allusers`)
-   console.log(res.data)
   
+  useEffect(() => {
+    (async () => {
+      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/allusers`);
+      console.log(res);
+    })();
   }, []);
 
   return (
