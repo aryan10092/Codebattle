@@ -774,7 +774,7 @@ const formatTime = (seconds) => {
                   </div>
                 </div>
                 <div className="bg-[#0f3460] rounded-lg border border-blue-500/20">
-                  <Editor
+             {hasSubmitted?     <Editor
                     height="500px"
                     language={language}
                     theme="vs-dark"
@@ -784,8 +784,22 @@ const formatTime = (seconds) => {
                       minimap: { enabled: false },
                       fontSize: 14,
                     }}
+                  />:
+                  <Editor
+                    height="500px"
+                    language={language}
+                    theme="vs-dark"
+                    value={"//Opponent's code"}   
+                   options={{
+                      readOnly: true,
+                      minimap: { enabled: false },
+                      fontSize: 14,
+                    }}
                   />
-                </div>
+                  }
+                   
+                     </div>
+                 
               </div>
             </div>
       </div>
