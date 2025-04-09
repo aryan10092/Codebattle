@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Code2, Trophy, Timer, Users, Zap, Sparkles } from "lucide-react"
 
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function Home() {
   const navigate = useNavigate();
+
+   useEffect(async() => {
+   const res=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/auth/allusers`)
+   console.log(res.data)
+  
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#1a1a2e] to-[#16213e] text-white">
