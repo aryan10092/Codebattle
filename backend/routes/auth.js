@@ -10,9 +10,8 @@ router.post('/signup', async (req, res) => {
   try {
     const { username, email, password } = req.body;
 
-    // Check if user already exists
     const existingUser = await User.findOne({ 
-      $or: [{ email }, { username }] 
+      email
     });
     
     if (existingUser) {
@@ -22,11 +21,11 @@ router.post('/signup', async (req, res) => {
       });
     }
 
-    // Create new user
+    
     const user = new User({ username, email, password });
     await user.save();
 
-    // Generate JWT token
+  
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
@@ -58,7 +57,7 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user by username
+    
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ 
@@ -67,7 +66,7 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Compare password
+    
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
       return res.status(401).json({ 
@@ -76,7 +75,7 @@ router.post('/login', async (req, res) => {
       });
     }
 
-    // Generate JWT token
+  
     const token = jwt.sign(
       { userId: user._id },
       process.env.JWT_SECRET,
