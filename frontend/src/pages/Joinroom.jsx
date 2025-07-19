@@ -7,7 +7,7 @@ import { nanoid } from "nanoid";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-function Joinroom() {
+export default function Joinroom() {
   const [roomid, setroomid] = useState("");
   const [name, setname] = useState("");
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ function Joinroom() {
     }
   };
 
-  const joinroom = (e) => {
+   const joinroom = (e) => {
     if (!roomid || !name) {
       toast.error("Please enter both name and room ID");
       return;
@@ -37,23 +37,27 @@ function Joinroom() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a1a2e] to-[#16213e] flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-[#0f3460] border-blue-500/20">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Animated background blobs */}
+      <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse z-0" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse z-0" />
+
+      <Card className="w-full max-w-md bg-[#181826] border border-blue-500/20 shadow-2xl relative z-10">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="bg-blue-500/20 p-4 rounded-full">
-              <Code2 className="h-12 w-12 text-blue-400" />
+            <div className="bg-gradient-to-tr from-blue-500/30 to-purple-500/30 p-4 rounded-full shadow-lg">
+              <Code2 className="h-12 w-12 text-blue-400 drop-shadow-lg" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <CardTitle className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-tight drop-shadow">
             Join Code Battle
           </CardTitle>
-          <CardDescription className="text-blue-200">
+          <CardDescription className="text-blue-200 mt-2">
             Create a new room or join an existing one to start coding
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-4">
+        <CardContent>
+          <form className="space-y-6" onSubmit={e => { e.preventDefault(); joinroom(e); }}>
             <div className="space-y-2">
               <label className="text-sm font-medium text-blue-200">Your Name</label>
               <div className="relative">
@@ -62,9 +66,10 @@ function Joinroom() {
                   placeholder="Enter your name"
                   value={name}
                   onChange={(e) => setname(e.target.value)}
-                  className="bg-[#1a1a2e] border-blue-500/20 text-white placeholder:text-blue-200/50"
+                  required
+                  className="bg-[#23233a] border border-blue-500/20 text-white placeholder:text-blue-200/50 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition"
                 />
-                <Users className="absolute right-3 top-3 h-4 w-4 text-blue-400" />
+                <Users className="absolute right-3 top-3 h-4 w-4 text-blue-400 pointer-events-none" />
               </div>
             </div>
 
@@ -76,44 +81,48 @@ function Joinroom() {
                   placeholder="Enter room ID"
                   value={roomid}
                   onChange={(e) => setroomid(e.target.value)}
-                  className="bg-[#1a1a2e] border-blue-500/20 text-white placeholder:text-blue-200/50"
+                  required
+                  className="bg-[#23233a] border border-blue-500/20 text-white placeholder:text-blue-200/50 focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400 transition"
                 />
                 {roomid && (
                   <button
+                    type="button"
                     onClick={copyToClipboard}
-                    className="cursor-pointer absolute right-3 top-3 text-blue-400 hover:text-blue-300"
+                    className="absolute right-10 top-3 text-blue-400 hover:text-purple-400 transition-colors"
+                    tabIndex={-1}
                   >
                     <Copy className="h-4 w-4" />
                   </button>
                 )}
+                <span className="absolute right-3 top-3">
+                  <Sparkles className="h-4 w-4 text-purple-400 pointer-events-none" />
+                </span>
               </div>
             </div>
-          </div>
 
-          <div className="flex flex-col gap-4">
-            <Button
-              onClick={createid}
-              className="w-full cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
-            >
-              <Sparkles className="mr-2 h-4 w-4" />
-              Generate New Room
-            </Button>
+            <div className="flex flex-col gap-4">
+              <Button
+                type="button"
+                onClick={createid}
+                className="w-full cursor-pointer bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-200"
+              >
+                <Sparkles className="mr-2 h-4 w-4" />
+                Generate New Room
+              </Button>
 
-            <Button
-              onClick={joinroom}
-              className="w-full cursor-pointer bg-[#1a1a2e] border border-blue-500/20 text-blue-200 hover:bg-blue-500/20"
-            >
-              Join Room
-            </Button>
-          </div>
+              <Button
+                type="submit"
+                className="w-full cursor-pointer bg-[#23233a] border border-blue-500/20 text-blue-200 hover:bg-blue-500/20 font-semibold py-3 rounded-lg shadow transition-all duration-200"
+              >
+                Join Room
+              </Button>
+            </div>
 
-          <div className="text-center text-sm text-blue-200/70">
-            <p>Share the room ID with your opponent to start the battle!</p>
-          </div>
+            <div className="text-center text-sm text-blue-200/70 mt-2">
+              <p>Share the room ID with your opponent to start the battle!</p>
+            </div>
+          </form>
         </CardContent>
       </Card>
     </div>
-  );
-}
-
-export default Joinroom;
+  );}

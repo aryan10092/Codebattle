@@ -176,8 +176,9 @@ console.log("scores",scores)
           console.error('Socket connection error:', error);
 
           setConnectionError(true);
-          toast.error("Connection to server lost. Trying to reconnect...");
-        });
+           toast.error("Connection to server lost. Trying to reconnect...");
+        
+         });
 
         socketref.current.on('reconnect', () =>
            {
@@ -527,29 +528,33 @@ const formatTime = (seconds) => {
   }, [players]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a1a2e] to-[#16213e] text-white">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white">
+       
+        {/* <div className="absolute -top-16 -left-24 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse z-0" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse z-0" /> */}
+
       {connectionError && (
     <div className="fixed top-0 left-0 right-0 bg-red-500 text-white p-2 text-center z-50">
        Connection lost. Trying to reconnect...  </div>
       )}
    
-      <div className="bg-[#0f3460] border-b border-blue-500/20">
+      <div className="bg-black border-blue border-blue-500/20">
      <div className="container mx-auto px-4 py-3">
 
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center ">
          <div className="flex items-center space-x-3">
-              <div className="bg-gradient-to-r from-blue-400 to-purple-500 p-2 rounded-lg">
+              <div className="bg-violet-700 p-2 rounded-lg">
                 <Terminal className="h-6 w-6 text-white" />
           </div>
 
              <div>
-                <h1 className="text-xl font-bold text-white">Code Battle</h1>
+                <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Code Battle</h1>
                 <p className="text-xs text-blue-200">Room: {roomid}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
 
-              <Badge variant="outline" className="border-blue-400 bg-blue-400/20 text-blue-200">
+              <Badge variant="outline" className="border-gray-700  text-blue-200">
                 Round {roundInfo.current}/{roundInfo.max}
 
               </Badge>
@@ -558,7 +563,7 @@ const formatTime = (seconds) => {
                   {formatTime(timeLeft)}
                 </Badge>
               )}
-              <Badge variant="outline" className="border-blue-400 bg-blue-400/20 text-blue-200">
+              <Badge variant="outline" className="border-gray-700 bg-blu text-blue-200">
                 {name}
               </Badge>
           </div>
@@ -571,7 +576,7 @@ const formatTime = (seconds) => {
  
           <div className="lg:col-span-2 space-y-4">
         
-            <Card className="bg-[#0f3460] border-blue-500/20">
+            <Card className="bg-black border-purple-500/20">
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center space-x-2 text-sm text-blue-200">
                   <Target className="text-red-400" />
@@ -601,7 +606,7 @@ const formatTime = (seconds) => {
             </Card>
 
    
-            <Card className="bg-[#0f3460] border-blue-500/20">
+            <Card className="bg-black border-purple-500/20">
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center space-x-2 text-sm text-blue-200">
                   <Award className="text-yellow-400" />
@@ -615,7 +620,7 @@ const formatTime = (seconds) => {
                     className={`w-full cursor-pointer transition-all duration-200 ${
                       difficulty === 'easy' 
                         ? 'bg-green-500 hover:bg-green-600 border-green-400 text-white shadow-lg shadow-green-500/20' 
-                        : 'bg-[#1a1a2e] hover:bg-[#16213e] text-blue-200 border border-blue-500/20'
+                        : 'bg-[#1a1a2e] hover:bg-gray-900 text-blue-200 border border-gray-500/20'
                     }`}
                   >
                     Easy
@@ -625,7 +630,7 @@ const formatTime = (seconds) => {
                     className={`w-full cursor-pointer transition-all duration-200 ${
                       difficulty === 'medium' 
                         ? 'bg-yellow-500 hover:bg-yellow-600 text-white shadow-lg shadow-yellow-500/20' 
-                        : 'bg-[#1a1a2e] hover:bg-[#16213e] text-blue-200 border border-blue-500/20'
+                        : 'bg-[#1a1a2e] hover:bg-gray-900 text-blue-200 border border-gray-500/20'
                     }`}
                   >
                     Medium   </Button>
@@ -634,7 +639,7 @@ const formatTime = (seconds) => {
                     className={`w-full cursor-pointer transition-all duration-200 ${
                       difficulty === 'hard' 
                         ? 'bg-red-500 bprder-red-400 hover:bg-red-600 text-white shadow-lg shadow-red-500/20' 
-                        : 'bg-[#1a1a2e] hover:bg-[#16213e] text-blue-200 border border-blue-500/20'
+                        : 'bg-[#1a1a2e] hover:bg-gray-900 text-blue-200 border border-gray-500/20'
                     }`}
                   >
                     Hard
@@ -652,7 +657,7 @@ const formatTime = (seconds) => {
             </Card>
 
    
-            <Card className="bg-[#0f3460] border-blue-500/20">
+            <Card className="bg-black border-purple-500/20">
               <CardHeader className="pb-2">
                 <CardTitle className="flex items-center space-x-2 text-sm text-blue-200">
                   <Code2 className="text-blue-400" />
@@ -663,8 +668,8 @@ const formatTime = (seconds) => {
                 <select
                   value={language}
                   onChange={(e) => setLanguage(e.target.value)}
-                  className="w-full bg-[#1a1a2e] border border-blue-500/20 text-blue-200 rounded-lg px-3 
-                  py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                  className="w-full bg-[#1a1a2e] border border-gray-500/20 text-blue-200 rounded-lg px-3 
+                  py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-300 transition-all duration-200"
                 >
                   <option value="javascript">JavaScript</option>
                   <option value="python">Python</option>
@@ -681,18 +686,18 @@ const formatTime = (seconds) => {
          
           <div className="lg:col-span-10 space-y-4">
          
-            <Card className="bg-[#0f3460] border-blue-500/20">
+            <Card className="bg-black border-purple-500/20">
               <CardHeader className="pb-2">
                 <div className="flex justify-between items-center">
-                  <CardTitle className="text-lg text-white">{currentChallenge?.Title || 'Loading...'}</CardTitle>
-                  <Badge variant="outline" className="border-purple-400 bg-purple-400/20 text-purple-200">
+                  <CardTitle className="text-lg text-blue-200">{currentChallenge?.Title || 'Loading...'}</CardTitle>
+                  <Badge variant="outline" className="border-gray-700 bg-purpl text-blue-200">
                     {difficulty.toUpperCase()}
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent>
                 <pre className="text-sm text-blue-200 whitespace-pre-wrap bg-[#1a1a2e] p-4 rounded-lg overflow-auto 
-                max-h-40 border border-blue-500/20">
+                max-h-40 border border-gray-500/20">
                   {currentChallenge?.Description || 'Loading challenge...'}
                 </pre>
               </CardContent>
@@ -701,7 +706,7 @@ const formatTime = (seconds) => {
  
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <div className="flex items-center justify-between bg-[#0f3460] p-3 rounded-lg border border-blue-500/20">
+                <div className="flex items-center justify-between p-3 rounded-lg border bg-black border-gray-500/20">
                   <h3 className="text-sm font-semibold flex items-center text-blue-200">
                     <Code2 className="mr-2 text-blue-400" /> Your Code
                   </h3>
@@ -722,7 +727,7 @@ const formatTime = (seconds) => {
                     </Button>
                   </div>
                 </div>
-                <div className="bg-[#0f3460] rounded-lg border border-blue-500/20">
+                <div className="bg-[#0f3460] rounded-lg  border border-black">
                   <Editor
                     height="500px"
                     language={language}
@@ -738,8 +743,8 @@ const formatTime = (seconds) => {
               </div>
 
               <div className="space-y-2">
-                <div className="flex items-center justify-between bg-[#0f3460] p-3 rounded-lg border border-blue-500/20">
-                  <h3 className="text-sm font-semibold flex items-center text-blue-200">
+                <div className="flex items-center justify-between bg-black border-purple-500/20 p-3 rounded-lg border ">
+                  <h3 className="text-sm font-semibold flex items-center text-purple-200">
                     <Users className="mr-2 text-red-400" /> Opponent's Code
                   </h3>
                   <div className="flex items-center space-x-2">
@@ -773,7 +778,7 @@ const formatTime = (seconds) => {
                     </Button>
                   </div>
                 </div>
-                <div className="bg-[#0f3460] rounded-lg border border-blue-500/20">
+                <div className="bg-[#0f3460] rounded-lg  border border-black">
              {hasSubmitted?     <Editor
                     height="500px"
                     language={language}
@@ -808,7 +813,7 @@ const formatTime = (seconds) => {
       
       {gameOver && finalResults && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-[#0f3460] p-6 rounded-lg max-w-md w-full">
+          <div className="bg-gray-900 p-6 rounded-lg max-w-md w-full">
             <h2 className="text-2xl font-bold text-center mb-4">Game Over!</h2>
             <div className="text-center mb-4">
               {totalScores.player1 === totalScores.player2 ? (

@@ -7,7 +7,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from 'axios';
 import { toast } from "react-hot-toast";
 
-function Login() {
+export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -41,7 +41,7 @@ function Login() {
         localStorage.setItem('user', JSON.stringify(response.data.user));
         toast.success("Logged in successfully!");
         
-        // Get the redirect path from location state or default to joinroom
+        
         const from = location.state?.from?.pathname || '/join';
         navigate(from, { replace: true });
       }
@@ -52,25 +52,30 @@ function Login() {
       setLoading(false);
     }
   };
+ 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1a1a2e] to-[#16213e] flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-[#0f3460] border-blue-500/20">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
+     
+      <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse z-0" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse z-0" />
+
+      <Card className="w-full max-w-md bg-black border border-blue-500/20 shadow-2xl relative z-10">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="bg-blue-500/20 p-4 rounded-full">
-              <User className="h-12 w-12 text-blue-400" />
+            <div className="bg-gradient-to-tr from-blue-500/30 to-purple-500/30 p-4 rounded-full shadow-lg">
+              <User className="h-12 w-12 text-blue-400 drop-shadow-lg" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <CardTitle className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-tight drop-shadow">
             Welcome Back
           </CardTitle>
-          <CardDescription className="text-blue-200">
+          <CardDescription className="text-blue-200 mt-2">
             Sign in to continue your coding journey
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-medium text-blue-200">Email</label>
               <div className="relative">
@@ -81,9 +86,9 @@ function Login() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="bg-[#1a1a2e] border-blue-500/20 text-white placeholder:text-blue-200/50"
+                  className=" border border-blue-500/20 text-white placeholder:text-blue-200/50 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition"
                 />
-                <User className="absolute right-3 top-3 h-4 w-4 text-blue-400" />
+                <User className="absolute right-3 top-3 h-4 w-4 text-blue-400 pointer-events-none" />
               </div>
             </div>
 
@@ -97,23 +102,33 @@ function Login() {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className="bg-[#1a1a2e] border-blue-500/20 text-white placeholder:text-blue-200/50"
+                  className=" border border-blue-500/20 text-white placeholder:text-blue-200/50 focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400 transition"
                 />
-                <Lock className="absolute right-3 top-3 h-4 w-4 text-blue-400" />
+                <Lock className="absolute right-3 top-3 h-4 w-4 text-blue-400 pointer-events-none" />
               </div>
             </div>
 
             <Button
               type="submit"
-              className="w-full cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white"
+              className="w-full cursor-pointer bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-200"
               disabled={loading}
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading ? (
+                <span>
+                  <svg className="inline mr-2 w-4 h-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                  </svg>
+                  Logging in...
+                </span>
+              ) : (
+                "Login"
+              )}
             </Button>
 
-            <div className="text-center text-sm text-blue-200/70">
+            <div className="text-center text-sm text-blue-200/70 mt-2">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-blue-400 hover:text-blue-300">
+              <Link to="/signup" className="text-blue-400 hover:text-purple-400 font-medium transition-colors">
                 Sign up here
               </Link>
             </div>
@@ -121,7 +136,4 @@ function Login() {
         </CardContent>
       </Card>
     </div>
-  );
-}
-
-export default Login;
+  );}
