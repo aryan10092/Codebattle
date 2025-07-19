@@ -95,7 +95,7 @@ export default function Joinroom() {
                   </button>
                 )}
                 <span className="absolute right-3 top-3">
-                  <Sparkles className="h-4 w-4 text-purple-400 pointer-events-none" />
+                  <Sparkles className="h-4 w-4 text-blue-400 pointer-events-none" />
                 </span>
               </div>
             </div>
