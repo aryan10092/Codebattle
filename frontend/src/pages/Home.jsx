@@ -162,8 +162,8 @@ const Home = () => {
                 transition={{
             delay: idx * 0.6,
             duration: 0.7,
-            //  repeat: Infinity,
-            //  repeatType: "reverse",
+           repeat: Infinity,
+             repeatType: "reverse",
             repeatDelay: 1.5,
                 }}
               >
