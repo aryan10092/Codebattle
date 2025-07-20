@@ -62,6 +62,11 @@ const Home = () => {
       icon: <Brain className="h-8 w-8" />,
       title: "AI-Powered",
       description: "Smart problem selection based on skill level"
+    },
+        {
+      icon: <Sword className="h-8 w-8" />,
+      title: "Competitive Coding",
+      description: "Challenge others and prove your skills in head-to-head matches"
     }
   ];
 
