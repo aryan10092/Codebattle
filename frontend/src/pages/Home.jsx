@@ -53,11 +53,11 @@ const Home = () => {
       title: "Timed Challenges",
       description: "Test your skills under pressure with time-limited problems"
     },
-    {
-      icon: <Trophy className="h-8 w-8" />,
-      title: "Leaderboards",
-      description: "Climb the ranks and showcase your coding prowess"
-    },
+    // {
+    //   icon: <Trophy className="h-8 w-8" />,
+    //   title: "Leaderboards",
+    //   description: "Climb the ranks and showcase your coding prowess"
+    // },
     {
       icon: <Brain className="h-8 w-8" />,
       title: "AI-Powered",
