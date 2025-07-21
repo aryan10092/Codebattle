@@ -194,7 +194,7 @@ const Home = () => {
        <motion.h1
          className="text-5xl sm:text-8xl font-bold mb-2 text-white drop-shadow-lg tracking-tight"
          initial={{ opacity: 0, y: 40, scale: 0.9 }}
-         animate={{ opacity: 1, y: 0, scale: 1 }}
+         whileInView={{ opacity: 1, y: 0, scale: 1 }}
          transition={{ duration: 0.8, type: "spring" }}
        >
          <span className="inline-block animate-fade-in-u">Elevate Your</span>
@@ -204,7 +204,7 @@ const Home = () => {
        <motion.h1
          className="text-5xl sm:text-8xl font-bold mb-6 text-gray-400 drop-shadow tracking-tight"
          initial={{ opacity: 0, y: 40, scale: 0.9 }}
-         animate={{ opacity: 1, y: 0, scale: 1.05, rotate: [2, 0] }}
+         whileInView={{ opacity: 1, y: 0, scale: 1.05, rotate: [2, 0] }}
          transition={{ delay: 0.3, duration: 0.9, type: "spring" }}
        >
          <span className="inline-block animate-puls">Coding Game</span>

@@ -175,8 +175,8 @@ console.log("scores",scores)
         socketref.current.on('connect_error', (error) => {
           console.error('Socket connection error:', error);
 
-           setConnectionError(true);
-            toast.error("Connection to server lost. Trying to reconnect...");
+          //  setConnectionError(true);
+          //   toast.error("Connection to server lost. Trying to reconnect...");
         
          });
 
@@ -620,7 +620,7 @@ const formatTime = (seconds) => {
                     className={`w-full cursor-pointer transition-all duration-200 ${
                       difficulty === 'easy' 
                         ? 'bg-green-500 hover:bg-green-600 border-green-400 text-white shadow-lg shadow-green-500/20' 
-                        : 'bg-[#1a1a2e] hover:bg-gray-900 text-blue-200 border border-gray-500/20'
+                        : 'text-gray-200 bg-black hover:bg-black border border-gray-800 hover:shadow-md hover:shadow-gray-800'
                     }`}
                   >
                     Easy
@@ -630,7 +630,7 @@ const formatTime = (seconds) => {
                     className={`w-full cursor-pointer transition-all duration-200 ${
                       difficulty === 'medium' 
                         ? 'bg-yellow-500 hover:bg-yellow-600 text-white shadow-lg shadow-yellow-500/20' 
-                        : 'bg-[#1a1a2e] hover:bg-gray-900 text-blue-200 border border-gray-500/20'
+                        : 'text-gray-200 bg-black hover:bg-black border border-gray-800 hover:shadow-md hover:shadow-gray-800'
                     }`}
                   >
                     Medium   </Button>
@@ -638,8 +638,8 @@ const formatTime = (seconds) => {
                     onClick={() => setDifficulty('hard')}
                     className={`w-full cursor-pointer transition-all duration-200 ${
                       difficulty === 'hard' 
-                        ? 'bg-red-500 bprder-red-400 hover:bg-red-600 text-white shadow-lg shadow-red-500/20' 
-                        : 'bg-[#1a1a2e] hover:bg-gray-900 text-blue-200 border border-gray-500/20'
+                        ? 'bg-red-500 border-red-400 hover:bg-red-600 text-white shadow-lg shadow-red-500/20' 
+                        : ' text-gray-200 bg-black hover:bg-black border border-gray-800 hover:shadow-md hover:shadow-gray-800'
                     }`}
                   >
                     Hard
@@ -648,7 +648,7 @@ const formatTime = (seconds) => {
                 <Button
                   onClick={fetchRandomChallenge}
                   disabled={generating}
-                  className="w-full cursor-pointer bg-black hover:bg-black border border-gray-700 hover:shadow-md hover:shadow-gray-800 text-white
+                  className="w-full cursor-pointer bg-[#1a1a2e] hover:bg-gray-900 border border-gray-800   text-white
                    shadow-l shadow-gray-500/20 transition-all duration-200"
                 >
                   {generating ? 'Generating...' : 'Generate'}
