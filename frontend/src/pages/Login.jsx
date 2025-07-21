@@ -57,17 +57,17 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
      
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse z-0" />
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse z-0" />
+      <div className="absolute -top-32 -left-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
 
       <Card className="w-full max-w-md bg-black border border-blue-500/20 shadow-2xl relative z-10">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="bg-gradient-to-tr from-blue-500/30 to-purple-500/30 p-4 rounded-full shadow-lg">
-              <User className="h-12 w-12 text-blue-400 drop-shadow-lg" />
+            <div className="bg-gray-900 p-4 rounded-full shadow-lg">
+              <User className="h-12 w-12 text-gray-300 drop-shadow-lg" />
             </div>
           </div>
-          <CardTitle className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent tracking-tight drop-shadow">
+          <CardTitle className="text-3xl font-extrabold  bg-clip-text text-white tracking-tight drop-shadow">
             Welcome Back
           </CardTitle>
           <CardDescription className="text-blue-200 mt-2">
@@ -86,7 +86,7 @@ export default function Login() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className=" border border-blue-500/20 text-white placeholder:text-blue-200/50 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition"
+                  className=" border border-blue-500/20 text-white placeholder:text-gray-200/50 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition"
                 />
                 <User className="absolute right-3 top-3 h-4 w-4 text-blue-400 pointer-events-none" />
               </div>
@@ -102,7 +102,7 @@ export default function Login() {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className=" border border-blue-500/20 text-white placeholder:text-blue-200/50 focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400 transition"
+                  className=" border border-blue-500/20 text-white placeholder:text-gray-200.50 focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400 transition"
                 />
                 <Lock className="absolute right-3 top-3 h-4 w-4 text-blue-400 pointer-events-none" />
               </div>
@@ -110,7 +110,7 @@ export default function Login() {
 
             <Button
               type="submit"
-              className="w-full cursor-pointer bg-gradient-to-r from-blue-600 via-purple-600 to-pink-500 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-200"
+              className="w-full cursor-pointer bg-black hover:bg-black border border-gray-700 hover:shadow-md hover:shadow-gray-800 text-white font-semibold py-3 rounded-lg shadow-lg transition-all duration-200"
               disabled={loading}
             >
               {loading ? (
@@ -126,10 +126,10 @@ export default function Login() {
               )}
             </Button>
 
-            <div className="text-center text-sm text-blue-200/70 mt-2">
+            <div className="text-center text-sm text-blue-200 mt-2">
               Don't have an account?{" "}
-              <Link to="/signup" className="text-blue-400 hover:text-purple-400 font-medium transition-colors">
-                Sign up here
+              <Link to="/signup" className="text-white hover:text-blue-100 font-medium transition-colors">
+                Sign up 
               </Link>
             </div>
           </form>

@@ -175,8 +175,8 @@ console.log("scores",scores)
         socketref.current.on('connect_error', (error) => {
           console.error('Socket connection error:', error);
 
-          setConnectionError(true);
-           toast.error("Connection to server lost. Trying to reconnect...");
+           setConnectionError(true);
+            toast.error("Connection to server lost. Trying to reconnect...");
         
          });
 
@@ -543,12 +543,12 @@ const formatTime = (seconds) => {
 
           <div className="flex justify-between items-center ">
          <div className="flex items-center space-x-3">
-              <div className="bg-violet-700 p-2 rounded-lg">
+              <div className="bg-black border border-gray-700 p-2 rounded-lg">
                 <Terminal className="h-6 w-6 text-white" />
           </div>
 
              <div>
-                <h1 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">Code Battle</h1>
+                <h1 className="text-xl font-bold  bg-clip-text text-white">Code Battle</h1>
                 <p className="text-xs text-blue-200">Room: {roomid}</p>
               </div>
             </div>
@@ -648,8 +648,8 @@ const formatTime = (seconds) => {
                 <Button
                   onClick={fetchRandomChallenge}
                   disabled={generating}
-                  className="w-full cursor-pointer bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white
-                   shadow-lg shadow-purple-500/20 transition-all duration-200"
+                  className="w-full cursor-pointer bg-black hover:bg-black border border-gray-700 hover:shadow-md hover:shadow-gray-800 text-white
+                   shadow-l shadow-gray-500/20 transition-all duration-200"
                 >
                   Generate
                 </Button>

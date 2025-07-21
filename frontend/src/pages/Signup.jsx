@@ -63,21 +63,21 @@ function Signup() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
        
-       <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse z-0" />
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse z-0" />
+       <div className="absolute -top-32 -left-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
 
-      <Card className="w-full max-w-md bg-black border-purple-500/20 shadow-lg">
+      <Card className="w-full max-w-md bg-black border-gray-500/20 shadow-lg">
         <CardHeader className="text-center">
          <div className="flex justify-center mb-4">
-            <div className="bg-purple-500/20 p-4 rounded-full">
-              <User className="h-12 w-12 text-purple-400" />
+            <div className="bg-gray-900 p-4 rounded-full">
+              <User className="h-12 w-12 text-gray-300" />
             </div>
           </div>
-          <CardTitle className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent ">
+          <CardTitle className="text-2xl font-bold  bg-clip-text text-white ">
             Create Account
           </CardTitle>
           
-          <CardDescription className="text-purple-200">
+          <CardDescription className="text-blue-200">
             Join the coding battle community
           </CardDescription>
         </CardHeader>
@@ -85,7 +85,7 @@ function Signup() {
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-purple-200">Username</label>
+              <label className="text-sm font-medium text-blue-200">Username</label>
               <div className="relative">
                 <Input
                   type="text"
@@ -94,14 +94,14 @@ function Signup() {
                   value={formData.username}
                   onChange={handleChange}
                   required
-                  className="bg-black border-purple-500/20 text-white placeholder:text-purple-200/50 "
+                  className="bg-black border-purple-500/20 text-white placeholder:text-gray-200/50 "
                 />
                 <User className="absolute right-3 top-3 h-4 w-4 text-blue-400" />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-purple-200">Email</label>
+              <label className="text-sm font-medium text-blue-200">Email</label>
               <div className="relative">
                 <Input
                   type="email"
@@ -110,14 +110,14 @@ function Signup() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="bg-black border-purple-500/20 text-white placeholder:text-purple-200/50"
+                  className="bg-black border-purple-500/20 text-white placeholder:text-gray-200/50"
                 />
                 <Mail className="absolute right-3 top-3 h-4 w-4 text-blue-400" />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-purple-200">Password</label>
+              <label className="text-sm font-medium text-blue-200">Password</label>
               <div className="relative">
                 <Input
                   type="password"
@@ -126,14 +126,14 @@ function Signup() {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className=" border-purple-500/20 text-white placeholder:text-purple-200/50"
+                  className=" border-purple-500/20 text-white placeholder:text-gray-200/50"
                 />
                 <Lock className="absolute right-3 top-3 h-4 w-4 text-blue-400" />
               </div>
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium text-purple-200">Confirm Password</label>
+              <label className="text-sm font-medium text-blue-200">Confirm Password</label>
               <div className="relative">
                 <Input
                   type="password"
@@ -142,7 +142,7 @@ function Signup() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className=" border-purple-500/20 text-white placeholder:text-purple-200/50"
+                  className=" border-purple-500/20 text-white placeholder:text-gray-200/50"
                 />
                 <Lock className="absolute right-3 top-3 h-4 w-4 text-blue-400" />
               </div>
@@ -150,15 +150,15 @@ function Signup() {
 
             <Button
               type="submit"
-              className="w-full cursor-pointer bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
+              className="w-full cursor-pointer bg-black hover:bg-black border border-gray-700 hover:shadow-md hover:shadow-gray-800  text-white"
               disabled={loading}
             >
               {loading ? "Creating Account..." : "Sign Up"}
             </Button>
 
-            <div className="text-center text-sm text-purple-200/70">
+            <div className="text-center text-sm text-blue-200">
               Already have an account?{" "}
-              <Link to="/login" className="text-blue-400 hover:text-purple-400 transition-colors">
+              <Link to="/login" className="text-white hover:text-blue-100 transition-colors">
                 Login here
               </Link>
             </div>
