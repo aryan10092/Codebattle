@@ -154,7 +154,7 @@ const Home = () => {
             </button>
           </Link>
           <Link to="/signup">
-            <Button className="bg-black border border-gray-700 hover:shadow-lg hover:shadow-gray-800 transition-shadow duration-200">
+            <Button className="bg-black border sm:block hidden border-gray-700 hover:shadow-lg hover:shadow-gray-800 transition-shadow duration-200">
               Get Started
             </Button>
           </Link>
