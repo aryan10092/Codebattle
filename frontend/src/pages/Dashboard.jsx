@@ -175,8 +175,8 @@ console.log("scores",scores)
         socketref.current.on('connect_error', (error) => {
           console.error('Socket connection error:', error);
 
-          //  setConnectionError(true);
-          //   toast.error("Connection to server lost. Trying to reconnect...");
+           setConnectionError(true);
+            toast.error("Connection to server lost. Trying to reconnect...");
         
          });
 
