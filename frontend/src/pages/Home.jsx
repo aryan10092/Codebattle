@@ -348,7 +348,7 @@ const Home = () => {
               animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
               transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
             >
-              <Star className="h-12 w-12 text-gray-400 mx-auto mb-6 animate-pulse" />
+              <Star className="h-12 w-12 text-yellow-400 mx-auto mb-6 animate-pulse" />
             </motion.div>
             <h3 className="text-3xl lg:text-4xl font-bold mb-4 text-white">           Ready to Test Your Skills?
             </h3>
