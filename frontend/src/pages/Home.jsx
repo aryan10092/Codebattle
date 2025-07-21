@@ -63,8 +63,7 @@ const Home = () => {
       icon: <Brain className="h-8 w-8" />,
       title: "AI-Powered",
       description: "Smart problem selection based on skill level"
-    },
-    {
+    },{
       icon: <Sword className="h-8 w-8" />,
       title: "Competitive Coding",
       description: "Challenge others and prove your skills in head-to-head matches"
@@ -201,6 +200,7 @@ const Home = () => {
          <span className="inline-block animate-fade-in-u">Elevate Your</span>
        </motion.h1>
 
+
        <motion.h1
          className="text-5xl sm:text-8xl font-bold mb-6 text-gray-400 drop-shadow tracking-tight"
          initial={{ opacity: 0, y: 40, scale: 0.9 }}
@@ -232,6 +232,8 @@ const Home = () => {
                 className="absolute pointer-events-none rounded-2xl border border-gray-700"
                 style={{
                   inset: 0,
+
+          
                 }}
               ></span>
               <Button
@@ -393,5 +395,8 @@ const Home = () => {
       </motion.footer>
     </div>
   );
+
 }
 export default Home;
+                
+
