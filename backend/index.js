@@ -25,6 +25,12 @@ mongoose.connect(process.env.MONGODB_URI , {
 
 app.use('/api/auth', authRoutes);
 
+app.get("/", (req, res) => {
+  console.log("Root route hit");
+  res.send("Backend alive!");
+});
+
+
 const server = http.createServer(app);
 
 
