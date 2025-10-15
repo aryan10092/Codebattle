@@ -68,7 +68,7 @@ function Dashboard() {
     setIsLoading(true);
     try {
       console.log(difficulty)
-      const response = await axios.post("https://api.openai.com/v1/chat/completions",
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/openai`,
         {
           model: "gpt-4",
           messages: [{ role: "system", content: `Generate a random ${difficulty} level coding question from leetcode or any platform that can be solved in any language,Strictly
@@ -444,7 +444,7 @@ const formatTime = (seconds) => {
     console.log(currentChallenge)
     setIsSubmitting(true);
     try {
-      const response = await axios.post("https://api.openai.com/v1/chat/completions",
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup/api/openai`,
         {
           model: "gpt-4",
           messages: [{
