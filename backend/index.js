@@ -7,7 +7,7 @@ const { Server } = require("socket.io");
 const authRoutes = require('./routes/auth');
 const path = require("path");
 require('dotenv').config();
-import axios from 'axios';
+const axios = require("axios");
 const app = express();
 
 
