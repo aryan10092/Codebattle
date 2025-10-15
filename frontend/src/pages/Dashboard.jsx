@@ -90,12 +90,12 @@ Respond in JSON format with the following structure:
 }
 ` }],
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_KEY}`,
-          },
-        }
+        // {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     Authorization: `Bearer ${import.meta.env.VITE_KEY}`,
+        //   },
+        // }
       );
       console.log(response.data)
       const challenge = JSON.parse(response.data.choices[0].message.content)
@@ -454,12 +454,12 @@ const formatTime = (seconds) => {
       Do NOT include any explanation, text, or extra formatting. The response should be strictly a JSON object.`
           }],
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${import.meta.env.VITE_KEY}`,
-          },
-        }
+        // {
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //     Authorization: `Bearer ${import.meta.env.VITE_KEY}`,
+        //   },
+        // }
       );
 
       const res = JSON.parse(response.data.choices[0].message.content);
