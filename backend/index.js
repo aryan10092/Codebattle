@@ -30,6 +30,26 @@ app.get("/", (req, res) => {
   res.send("Backend alive!");
 });
 
+app.post("/api/openai", async (req, res) => {
+  try {
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      req.body, // Forward the same payload
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        },
+      }
+    );
+    res.json(response.data);
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    res.status(500).json({ error: "OpenAI request failed" });
+  }
+});
+
+
 
 const server = http.createServer(app);
 
