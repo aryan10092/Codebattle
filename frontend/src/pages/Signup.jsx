@@ -6,6 +6,7 @@ import { User, Mail, Lock } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { toast } from "react-hot-toast";
+import { ShineBorder } from '@/components/ui/shine-border';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -63,11 +64,13 @@ function Signup() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
        
-       <div className="absolute -top-32 -left-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
+       {/* <div className="absolute -top-32 -left-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" /> */}
 
-      <Card className="w-full max-w-md bg-black border-gray-500/20 shadow-lg">
+      <Card className="w-full max-w-md bg-black border-gray-500/20 relative shadow-lg z-10">
+       <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
         <CardHeader className="text-center">
+          
          <div className="flex justify-center mb-4">
             <div className="bg-gray-900 p-4 rounded-full">
               <User className="h-12 w-12 text-gray-300" />
@@ -126,7 +129,7 @@ function Signup() {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className=" border-purple-500/20 text-white placeholder:text-gray-200/50"
+                  className=" border-purple-500/20 bg-black text-white placeholder:text-gray-200/50"
                 />
                 <Lock className="absolute right-3 top-3 h-4 w-4 text-blue-400" />
               </div>
@@ -142,7 +145,7 @@ function Signup() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  className=" border-purple-500/20 text-white placeholder:text-gray-200/50"
+                  className=" border-purple-500/20 bg-black text-white placeholder:text-gray-200/50"
                 />
                 <Lock className="absolute right-3 top-3 h-4 w-4 text-blue-400" />
               </div>

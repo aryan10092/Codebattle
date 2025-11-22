@@ -6,6 +6,7 @@ import { User, Lock } from "lucide-react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from 'axios';
 import { toast } from "react-hot-toast";
+import { ShineBorder } from '@/components/ui/shine-border';
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -57,10 +58,11 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4 relative overflow-hidden">
      
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
-      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
+      {/* <div className="absolute -top-32 -left-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" />
+      <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-gray-500/20 rounded-full blur-3xl animate-pulse z-0" /> */}
 
       <Card className="w-full max-w-md bg-black border border-blue-500/20 shadow-2xl relative z-10">
+        <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
             <div className="bg-gray-900 p-4 rounded-full shadow-lg">
@@ -86,7 +88,7 @@ export default function Login() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className=" border border-blue-500/20 text-white placeholder:text-gray-200/50 focus:ring-2 focus:ring-blue-500/40 focus:border-blue-400 transition"
+                  className=" border bg-black border-blue-500/20 text-white placeholder:text-gray-200/50  transitio"
                 />
                 <User className="absolute right-3 top-3 h-4 w-4 text-blue-400 pointer-events-none" />
               </div>
@@ -102,7 +104,7 @@ export default function Login() {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  className=" border border-blue-500/20 text-white placeholder:text-gray-200.50 focus:ring-2 focus:ring-purple-500/40 focus:border-purple-400 transition"
+                  className=" border bg-black border-blue-500/20 text-white placeholder:text-gray-200.50 focus:ring-1 focus:ring-purple-500/40 focus:border-purple-400 transition"
                 />
                 <Lock className="absolute right-3 top-3 h-4 w-4 text-blue-400 pointer-events-none" />
               </div>
