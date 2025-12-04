@@ -1,8 +1,8 @@
 FROM node:20
 WORKDIR /app
-COPY . .
+COPY package*.json ./
 RUN npm install
+COPY . .
 EXPOSE 5000
-ENV MONGODB_URI="mongodb://localhost:27017/yourdbname"
-ENV JWT_SECRET="your_secret_key"
-CMD ["node", "index.js"]
+
+CMD ["npm", "run", "dev"]
