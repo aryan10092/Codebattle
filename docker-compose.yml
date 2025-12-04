@@ -1,23 +1,30 @@
 version: '3.8'
+
 services:
   frontend:
     build:
       context: ./frontend
     ports:
-      - "3000:3000" 
+      - "5173:5173"   # Vite dev server
     depends_on:
       - backend
     environment:
-      - API_URL=http://localhost:5000
+      - VITE_BACKEND_URL=http://backend:5000   # Access backend from container
+      - VITE_KEY=${VITE_KEY}
+    command: ["npm", "run", "dev", "--", "--host"]  # Required for Vite inside Docker
+
   backend:
     build:
       context: ./backend
     ports:
       - "5000:5000" 
     environment:
-      - FRONTEND_URL=http://frontend:3000 
       - MONGODB_URI=${MONGODB_URI}
       - JWT_SECRET=${JWT_SECRET}
+      - OPENAI_API_KEY=${VITE_KEY}
+      - FRONTEND_URL=http://frontend:5173
+
 networks:
   default:
     driver: bridge
+
