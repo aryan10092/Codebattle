@@ -30,24 +30,46 @@ app.get("/", (req, res) => {
   res.send("Backend alive!");
 });
 
-app.post("/api/openai", async (req, res) => {
+const groqHandler = async (req, res) => {
   try {
+    const groqApiKey = process.env.GROQ_API_KEY || process.env.GROK_API_KEY;
     const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      req.body, // Forward the same payload
+      "https://api.groq.com/openai/v1/chat/completions",
+      req.body, 
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+          Authorization: `Bearer ${groqApiKey}`,
         },
       }
     );
     res.json(response.data);
   } catch (err) {
     console.error(err.response?.data || err.message);
-    res.status(500).json({ error: "OpenAI request failed" });
+    res.status(500).json({ error: "Groq request failed" });
   }
-});
+};
+
+app.post("/api/groq", groqHandler);
+
+// app.post("/api/openai", async (req, res) => {
+//   try {
+//     const response = await axios.post(
+//       "https://api.openai.com/v1/chat/completions",
+//       req.body, // Forward the same payload
+//       {
+//         headers: {
+//           "Content-Type": "application/json",
+//           Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+//         },
+//       }
+//     );
+//     res.json(response.data);
+//   } catch (err) {
+//     console.error(err.response?.data || err.message);
+//     res.status(500).json({ error: "OpenAI request failed" });
+//   }
+// });
 
 
 
