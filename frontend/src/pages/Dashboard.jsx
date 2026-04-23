@@ -59,6 +59,37 @@ function Dashboard() {
     playersRef.current = players;
   }, [players]);
 
+const parseModelJson = (content) => {
+    if (!content || typeof content !== "string") {
+      throw new Error("Model returned empty content");
+    }
+
+    const trimmed = content.trim();
+
+    try {
+      return JSON.parse(trimmed);
+    } catch {
+     
+    }
+
+    const fencedMatch = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);
+    const candidate = fencedMatch ? fencedMatch[1].trim() : trimmed;
+
+    try {
+      return JSON.parse(candidate);
+    } catch {
+    }
+
+    const firstBrace = candidate.indexOf("{");
+    const lastBrace = candidate.lastIndexOf("}");
+    if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
+      const objectSlice = candidate.slice(firstBrace, lastBrace + 1);
+      return JSON.parse(objectSlice);
+    }
+
+    throw new Error("Could not parse JSON from model response");
+  };
+
   const fetchRandomChallenge = async () => {
     if (!bothPlayersReady) {
       toast.error("Both players must be ready before starting the challenge");
@@ -68,9 +99,9 @@ function Dashboard() {
     setIsLoading(true);
     try {
       console.log(difficulty)
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/openai`,
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/groq`,
         {
-          model: "gpt-4",
+          model: "llama-3.1-8b-instant",
           messages: [{ role: "system", content: `Generate a random ${difficulty} level coding question from leetcode or any platform that can be solved in any language,Strictly
 Respond in JSON format with the following structure:
 
@@ -98,7 +129,7 @@ Respond in JSON format with the following structure:
         // }
       );
       console.log(response.data)
-      const challenge = JSON.parse(response.data.choices[0].message.content)
+      const challenge = parseModelJson(response.data.choices[0].message.content)
       console.log("Generated challenge:", challenge);
       setCurrentChallenge(challenge);
       
@@ -119,7 +150,6 @@ Respond in JSON format with the following structure:
       setgenerating(false)
     }
   };
-
   useEffect(()=>{
     console.log(code)
   },[code])
@@ -424,7 +454,7 @@ const formatTime = (seconds) => {
     return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
   };
 
-  const handlesubmit = async () => {
+const handlesubmit = async () => {
   if (!bothPlayersReady) 
       {
       toast.error("Both players must be ready before submitting");
@@ -444,9 +474,9 @@ const formatTime = (seconds) => {
     console.log(currentChallenge)
     setIsSubmitting(true);
     try {
-      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/openai`,
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/groq`,
         {
-          model: "gpt-4",
+          model: "llama-3.1-8b-instant",
           messages: [{
             role: "system",
             content: `Check the following code: ${code} for the given question: ${currentChallenge}. Return ONLY a JSON object in this format:
@@ -462,14 +492,15 @@ const formatTime = (seconds) => {
         // }
       );
 
-      const res = JSON.parse(response.data.choices[0].message.content);
-      console.log(res.marks)
-      setmarks(Number(res.marks));
+      const res = parseModelJson(response.data.choices[0].message.content);
+      const parsedMarks = Number(String(res.marks).match(/\d+(?:\.\d+)?/)?.[0] || 0);
+      console.log(parsedMarks)
+      setmarks(parsedMarks);
      
       if (socketref.current) {
         socketref.current.emit("submit_code", {
           roomid,
-          score: Number(res.marks)
+          score: parsedMarks
         });
       }
 
