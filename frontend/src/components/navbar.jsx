@@ -3,7 +3,7 @@
 import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
 
 import React, { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 const NAV_ITEMS = ["Home", "New arrivals", "Download", "Pricing"];
 
 export default function Navbar() {
@@ -39,12 +39,12 @@ export default function Navbar() {
 
             {/* right: CTA button */}
             <div className="">
-              <a href="/login">
+              <Link to="/login">
                 <button className="relative text-white py-2 px-3 font-semibold border border-[#605e5e] tracking-wide text-sm rounded-lg hover:bg-white/10 transition">
                   Sign in
                 </button>
                 
-              </a>
+              </Link>
             </div>
           </div>
         </div>
