@@ -31,7 +31,7 @@ export default function Joinroom() {
       toast.error("Please enter both name and room ID");
       return;
     }
-    navigate(`/dashboard/${roomid}?name=${encodeURIComponent(name)}`, {
+    navigate(`/room/${roomid}?name=${encodeURIComponent(name)}`, {
       state: { name }
     });
   };

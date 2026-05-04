@@ -21,7 +21,7 @@ services:
     environment:
       - MONGODB_URI=${MONGODB_URI}
       - JWT_SECRET=${JWT_SECRET}
-      - OPENAI_API_KEY=${VITE_KEY}
+      - GROQ_API_KEY=${VITE_KEY}
       - FRONTEND_URL=http://frontend:5173
 
 networks:

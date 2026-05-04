@@ -93,7 +93,7 @@
  docker run -p 5000:5000 `
 	 -e MONGODB_URI="<your-mongo-uri>" `
 	 -e JWT_SECRET="<your-jwt-secret>" `
-     -e OPENAI_API_KEY="<ypur-openapi-key>" `
+	-e GROQ_API_KEY="<your-groq-api-key>" `
 	 codebattle-backend
  
  # Build frontend
