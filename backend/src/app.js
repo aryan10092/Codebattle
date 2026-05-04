@@ -5,6 +5,8 @@ const authRoutes = require("./routes/auth");
 const groqRoutes = require("./routes/groq");
 const profileRoutes = require("./routes/profile");
 const leaderboardRoutes = require("./routes/leaderboard");
+const path = require("path");
+
 
   function createApp() {
   const app = express();
@@ -20,6 +22,13 @@ const leaderboardRoutes = require("./routes/leaderboard");
   app.use("/api", groqRoutes);
   app.use("/api/profile", profileRoutes);
   app.use("/api/leaderboard", leaderboardRoutes);
+    // serve frontend build
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+
+// fallback for React routes
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+});
 
   return app;
 }
