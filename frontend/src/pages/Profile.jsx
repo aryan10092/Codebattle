@@ -6,6 +6,7 @@ import Navbar from '@/components/navbar';
 import { Badge } from '@/components/ui/badge';
 import { HoverBorderGradient } from '@/components/ui/hover-border-gradient';
 import { ArrowRight, Crown, Pencil, Sparkles, Target, Trophy, UserCircle2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function Profile() {
   const [user, setUser] = useState(null);
