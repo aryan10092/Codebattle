@@ -11,7 +11,7 @@ import Joinroom from './pages/Joinroom'
 import BattleRoom from './pages/BattleRoom'
 import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoute'
-import Dashboard from './pages/DashBoard'
+import Dashboard from './pages/Dashboard'
 
 function App() {
   
