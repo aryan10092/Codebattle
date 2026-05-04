@@ -27,6 +27,19 @@ const userSchema = new mongoose.Schema({
   }
 })
 
+// profile / stats
+userSchema.add({
+  rating: { type: Number, default: 1000 },
+  wins: { type: Number, default: 0 },
+  losses: { type: Number, default: 0 },
+  gamesPlayed: { type: Number, default: 0 },
+  avatarUrl: { type: String, default: '' },
+  bio: { type: String, default: '' },
+  country: { type: String, default: '' },
+  achievements: { type: [String], default: [] },
+  lastActive: { type: Date }
+})
+
 userSchema.pre('save', async function(next) {
   if (!this.isModified('password')) return next();
   

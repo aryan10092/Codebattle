@@ -8,8 +8,10 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Joinroom from './pages/Joinroom'
-import Dashboard from './pages/Dashboard'
+import BattleRoom from './pages/BattleRoom'
+import Profile from './pages/Profile'
 import ProtectedRoute from './components/ProtectedRoute'
+import Dashboard from './pages/DashBoard'
 
 function App() {
   
@@ -21,14 +23,20 @@ function App() {
     <Route path='/' element={<Home/>}/>
     <Route path='/login' element={<Login/>}/>
     <Route path='/signup' element={<Signup/>}/>
+    <Route path='/dashboard' element={<Dashboard/>}/>
       <Route path='/join' element={
         <ProtectedRoute>
           <Joinroom/>
         </ProtectedRoute>
         }/>
-      <Route path='/dashboard/:roomid' element={
+      <Route path='/room/:roomid' element={
         <ProtectedRoute>
-           <Dashboard/>
+           <BattleRoom/>
+        </ProtectedRoute>
+       }/>
+      <Route path='/profile' element={
+        <ProtectedRoute>
+          <Profile />
         </ProtectedRoute>
        }/>
     </Routes>
