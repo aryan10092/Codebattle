@@ -27,7 +27,7 @@
  
  The backend reads `MONGODB_URI` and `JWT_SECRET`. The frontend uses Vite environment variables (prefixed with `VITE_`) when needed.
  
- **Run locally (manual / dev)**
+ # Run locally (manual / dev)
  
  1) Backend
  
@@ -63,7 +63,7 @@
  
  Visit `http://localhost:5173` for the frontend (the frontend will talk to the backend at `http://localhost:5000` if configured).
  
- **Run with Docker / docker-compose**
+ # Run with Docker / docker-compose
  
  This repo includes a `docker-compose.yml` that builds and starts both services. To run with Docker Compose:
  
