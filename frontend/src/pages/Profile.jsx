@@ -33,6 +33,9 @@ export default function Profile() {
           });
         }
       } catch (err) {
+        if(err.response?.status === 401) {
+          toast.error('Please log in to view your profile');
+        }
         console.error(err);
       }
     }
