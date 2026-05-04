@@ -43,7 +43,7 @@ export default function Login() {
         toast.success("Logged in successfully!");
         
         
-        const from = location.state?.from?.pathname || '/join';
+        const from = location.state?.from?.pathname || '/dashboard';
         navigate(from, { replace: true });
       }
     } catch (error) {
