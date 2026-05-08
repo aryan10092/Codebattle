@@ -52,7 +52,7 @@ function Signup() {
         //toast()
         toast.success("Account created successfully!");
         
-        navigate('/join');
+        navigate('/dashboard');
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
