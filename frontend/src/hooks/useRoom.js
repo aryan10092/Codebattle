@@ -249,7 +249,7 @@ export function useRoom({ roomid, name, locationState, navigate }) {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/groq`,
         {
-          model: "llama-3.1-8b-instant",
+          model: "openai/gpt-oss-20b",
           messages: [
             {
               role: "system",
@@ -333,7 +333,7 @@ Respond in JSON format with the following structure:
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/groq`,
         {
-           model: "llama-3.1-8b-instant",
+           model: "openai/gpt-oss-20b",
         messages: [
           {
             role: "system",
