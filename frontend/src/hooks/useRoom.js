@@ -253,7 +253,7 @@ export function useRoom({ roomid, name, locationState, navigate }) {
           messages: [
             {
               role: "system",
-              content: `Generate a random ${difficulty} level coding question from leetcode or any platform that can be solved in any language,Strictly
+              content: `Generate a random ${difficulty === 'easy' ? 'easy' : 'medium'} level coding question from leetcode or any platform that can be solved in any language,Strictly
 Respond in JSON format with the following structure:
 
 {
