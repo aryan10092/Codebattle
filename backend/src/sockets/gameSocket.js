@@ -14,38 +14,38 @@ function getStatsDelta({ isTie, isWinner }) {
   return { rating: -10, wins: 0, losses: 1, gamesPlayed: 1 };
 }
 
-async function persistLeaderboardStats(room, players, winnerName, isTie) {
-  const now = new Date();
+  async function persistLeaderboardStats(room, players, winnerId, isTie) {
+    const now = new Date();
 
-  const operations = players.map((player) => {
-    const isWinner = !isTie && player.name === winnerName;
-    const delta = getStatsDelta({ isTie, isWinner });
+    const operations = players.map((player) => {
+      const isWinner = !isTie && player.userId === winnerId;
+      const delta = getStatsDelta({ isTie, isWinner });
 
-    return {
-      updateOne: {
-        filter: { username: player.name },
-        update: {
-          $inc: {
-            rating: delta.rating,
-            wins: delta.wins,
-            losses: delta.losses,
-            gamesPlayed: delta.gamesPlayed,
-          },
-          $set: {
-            lastActive: now,
+      return {
+        updateOne: {
+          filter: { _id: player.userId },
+          update: {
+            $inc: {
+              rating: delta.rating,
+              wins: delta.wins,
+              losses: delta.losses,
+              gamesPlayed: delta.gamesPlayed,
+            },
+            $set: {
+              lastActive: now,
+            },
           },
         },
-      },
-    };
-  });
+      };
+    });
 
-  if (!operations.length) {
-    return;
+    if (!operations.length) {
+      return;
+    }
+
+    const result = await User.bulkWrite(operations, { ordered: false });
+    console.log(`Leaderboard stats updated for room ${room.id}`, result.modifiedCount || 0);
   }
-
-  const result = await User.bulkWrite(operations, { ordered: false });
-  console.log(`Leaderboard stats updated for room ${room.id}`, result.modifiedCount || 0);
-}
 
 function createCleanRoomObject(room) {
   return {
@@ -95,9 +95,9 @@ function processRoundResults(io, rooms, room) {
 
   const players = Object.values(room.players);
   const isTie = players[0].score === players[1].score;
-  const roundWinnerName = isTie ? null : players.reduce((max, player) =>
+  const roundWinnerId = isTie ? null : players.reduce((max, player) =>
     player.score > max.score ? player : max,
-  players[0]).name;
+  players[0]).userId;
 
   if (isTie) {
     players.forEach((player) => {
@@ -126,7 +126,7 @@ function processRoundResults(io, rooms, room) {
       })),
     });
   } else {
-    const roundWinner = players.find((player) => player.name === roundWinnerName) || players[0];
+    const roundWinner = players.find((player) => player.userId === roundWinnerId) || players[0];
 
     roundWinner.totalScore += 1;
 
@@ -146,7 +146,7 @@ function processRoundResults(io, rooms, room) {
     });
 
 
-  persistLeaderboardStats(room, players, roundWinnerName, isTie).catch((error) => {
+  persistLeaderboardStats(room, players, roundWinnerId, isTie).catch((error) => {
     console.error(`Failed to persist leaderboard stats for room ${room.id}:`, error);
   });
     io.to(room.id).emit("update_leaderboard", {
@@ -213,7 +213,7 @@ function registerGameSockets(io) {
   io.on("connection", (socket) => {
     console.log(`user connected:${socket.id}`);
 
-    socket.on("join", ({ roomid, name }) => {
+    socket.on("join", ({ roomid, name, userId }) => {
       const room = rooms.get(roomid) || createRoom(roomid);
 
       if (Object.keys(room.players).length >= 2 && !room.players[socket.id]) {
@@ -226,6 +226,7 @@ function registerGameSockets(io) {
       } else {
         room.players[socket.id] = {
           id: socket.id,
+          userId,
           name,
           code: "",
           isReady: false,

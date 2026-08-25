@@ -61,7 +61,7 @@ export function useRoom({ roomid, name, locationState, navigate }) {
     }, 1000);
   };
 
-  const setRoundScoresFromLeaderboard = (winnerName, isTie) => {
+  const setRoundScoresFromLeaderboard = (winnerId, isTie) => {
     if (isTie) {
       setScores((prev) => ({
         player1: (prev.player1 || 0) + 1,
@@ -76,9 +76,9 @@ export function useRoom({ roomid, name, locationState, navigate }) {
 
     setScores((prev) => {
       const nextScores = { ...prev };
-      if (playersRef.current.player1?.name === winnerName) {
+      if (playersRef.current.player1?.id === winnerId) {
         nextScores.player1 = (prev.player1 || 0) + 1;
-      } else if (playersRef.current.player2?.name === winnerName) {
+      } else if (playersRef.current.player2?.id === winnerId) {
         nextScores.player2 = (prev.player2 || 0) + 1;
       }
       return nextScores;
@@ -86,9 +86,9 @@ export function useRoom({ roomid, name, locationState, navigate }) {
 
     setTotalScores((prev) => {
       const nextScores = { ...prev };
-      if (playersRef.current.player1?.name === winnerName) {
+      if (playersRef.current.player1?.id === winnerId) {
         nextScores.player1 = (prev.player1 || 0) + 1;
-      } else if (playersRef.current.player2?.name === winnerName) {
+      } else if (playersRef.current.player2?.id === winnerId) {
         nextScores.player2 = (prev.player2 || 0) + 1;
       }
       return nextScores;
@@ -136,9 +136,12 @@ export function useRoom({ roomid, name, locationState, navigate }) {
 
         socketref.current.on("connect_failed", handleConnectFailure);
 
+        const storedUser = JSON.parse(localStorage.getItem("user") || "null");
+
         socketref.current.emit("join", {
           roomid,
           name,
+          userId: storedUser?.id,
         });
 
         socketref.current.on("opponent_code_update", ({ code: nextCode }) => {
@@ -154,8 +157,8 @@ export function useRoom({ roomid, name, locationState, navigate }) {
             const p2 = updatedRoom.players[id2];
 
             const newPlayers = {
-              player1: { id: id1, name: p1.name, socketId: id1 },
-              player2: { id: id2, name: p2.name, socketId: id2 },
+              player1: { id: p1.id, name: p1.name, socketId: id1 },
+              player2: { id: p2.id, name: p2.name, socketId: id2 },
             };
 
             setPlayers(newPlayers);
@@ -201,14 +204,14 @@ export function useRoom({ roomid, name, locationState, navigate }) {
           setDifficulty(nextDifficulty);
         });
 
-        socketref.current.on("update_leaderboard", ({ winnerName, isTie, message, playerScores }) => {
+        socketref.current.on("update_leaderboard", ({ winnerName, winnerId, isTie, message }) => {
           if (isTie) {
             toast.success(message || "It's a tie! Both players get a point");
           } else {
             toast.success(`${winnerName} wins this round`);
           }
 
-          setRoundScoresFromLeaderboard(winnerName, isTie);
+          setRoundScoresFromLeaderboard(winnerId, isTie);
         });
 
         socketref.current.on("opponent_submitted", ({ message }) => {
