@@ -1,5 +1,6 @@
 const MAX_ROUNDS = 3;
 const ROUND_DURATION = 5 * 60 * 1000;
+const DISCONNECT_GRACE_PERIOD = 60 * 1000;
 const User = require('../models/User');
 
 function getStatsDelta({ isTie, isWinner }) {
@@ -184,6 +185,7 @@ function processRoundResults(io, rooms, room) {
   }
 
   room.round += 1;
+  room.status = "waiting";
   room.currentChallenge = null;
   room.roundStartTime = null;
   room.timer = null;
@@ -212,21 +214,57 @@ function registerGameSockets(io) {
 
   io.on("connection", (socket) => {
     console.log(`user connected:${socket.id}`);
+    
 
     socket.on("join", ({ roomid, name, userId }) => {
       const room = rooms.get(roomid) || createRoom(roomid);
+      const normalizedUserId = userId ? String(userId) : null;
+      const existingPlayerEntry = normalizedUserId
+        ? Object.entries(room.players).find(
+            ([, player]) => player.userId && String(player.userId) === normalizedUserId,
+          )
+        : null;
 
-      if (Object.keys(room.players).length >= 2 && !room.players[socket.id]) {
+      if (Object.keys(room.players).length >= 2 && !existingPlayerEntry && !room.players[socket.id]) {
         socket.emit("room_full");
         return;
       }
 
-      if (room.players[socket.id]) {
+      console.log("JOIN DEBUG", {
+  roomid,
+  socketId: socket.id,
+  userId,
+  normalizedUserId,
+  players: Object.values(room.players).map((p) => ({
+    socketId: p.id,
+    userId: p.userId,
+    name: p.name,
+    disconnected: p.disconnected,
+    score: p.score,
+    totalScore: p.totalScore,
+  })),
+  existingPlayerEntry,
+  playerCount: Object.keys(room.players).length,
+});
+
+      if (existingPlayerEntry) {
+        const [oldSocketId, player] = existingPlayerEntry;
+        delete room.players[oldSocketId];
+        if (player.disconnectTimer) {
+          clearTimeout(player.disconnectTimer);
+          player.disconnectTimer = null;
+        }
+        player.id = socket.id;
+        player.socketId = socket.id;
+        player.name = name;
+        player.disconnected = false;
+        room.players[socket.id] = player;
+      } else if (room.players[socket.id]) {
         room.players[socket.id].socketId = socket.id;
       } else {
         room.players[socket.id] = {
           id: socket.id,
-          userId,
+          userId: normalizedUserId,
           name,
           code: "",
           isReady: false,
@@ -239,11 +277,12 @@ function registerGameSockets(io) {
 
       rooms.set(roomid, room);
       socket.join(roomid);
-      users.set(socket.id, { roomid, name });
+      users.set(socket.id, { roomid, name, userId: normalizedUserId });
 
       socket.emit("room_update", createCleanRoomObject(room));
+      io.to(roomid).emit("room_update", createCleanRoomObject(room));
 
-      if (room.status === "in-progress") {
+      if (room.status === "in-progress" && room.timer && room.roundStartTime) {
         socket.emit("game_start", {
           round: room.round,
           maxRounds: room.maxRounds,
@@ -267,7 +306,33 @@ function registerGameSockets(io) {
 
         if (room) {
           if (room.players[socket.id]) {
-            room.players[socket.id].disconnected = true;
+            const player = room.players[socket.id];
+            player.disconnected = true;
+            player.disconnectTimer = setTimeout(() => {
+              const currentRoom = rooms.get(userData.roomid);
+              const currentPlayer = currentRoom?.players[socket.id];
+
+              if (!currentRoom || !currentPlayer || !currentPlayer.disconnected) {
+                return;
+              }
+
+              delete currentRoom.players[socket.id];
+
+              if (currentRoom.timer) {
+                clearTimeout(currentRoom.timer);
+                currentRoom.timer = null;
+              }
+
+              currentRoom.status = "waiting";
+              currentRoom.roundStartTime = null;
+
+              if (Object.keys(currentRoom.players).length === 0) {
+                rooms.delete(userData.roomid);
+                return;
+              }
+
+              io.to(userData.roomid).emit("room_update", createCleanRoomObject(currentRoom));
+            }, DISCONNECT_GRACE_PERIOD);
           }
 
           io.to(userData.roomid).emit("room_update", createCleanRoomObject(room));
@@ -374,7 +439,8 @@ function registerGameSockets(io) {
 
       room.players[socket.id].score = Number(score);
       room.players[socket.id].submitted = true;
-      room.players[socket.id].totalScore += Number(score);
+
+      console.log(`Player ${room.players[socket.id].name} having userid ${room.players[socket.id].userId} and socket id as ${room.players[socket.id].id} submitted code with score ${score} in room ${roomid}`);
 
       const allSubmitted = Object.values(room.players).every((player) => player.submitted);
 

@@ -47,7 +47,11 @@ export function useRoom({ roomid, name, locationState, navigate }) {
 
   const startTimer = (startTime, duration) => {
     clearTimer();
-    const initialSeconds = Math.max(0, Math.floor((duration || DEFAULT_TIME_LEFT * 1000) / 1000));
+    const durationSeconds = Math.floor((duration || DEFAULT_TIME_LEFT * 1000) / 1000);
+    const elapsedSeconds = startTime
+      ? Math.floor((Date.now() - startTime) / 1000)
+      : 0;
+    const initialSeconds = Math.max(0, durationSeconds - elapsedSeconds);
     setTimeLeft(initialSeconds);
 
     timerRef.current = setInterval(() => {
@@ -118,6 +122,16 @@ export function useRoom({ roomid, name, locationState, navigate }) {
 
         setConnectionError(false);
 
+        const storedUser = JSON.parse(localStorage.getItem("user") || "null");
+        const userId = storedUser?.id ?? storedUser?._id;
+        const joinRoom = () => {
+          socketref.current.emit("join", {
+            roomid,
+            name,
+            userId,
+          });
+        };
+
         socketref.current.on("connect_error", (error) => {
           console.error("Socket connection error:", error);
           setConnectionError(true);
@@ -129,20 +143,14 @@ export function useRoom({ roomid, name, locationState, navigate }) {
           toast.success("Reconnected to server!");
         });
 
+        socketref.current.on("connect", joinRoom);
+
         socketref.current.on("room_full", () => {
           toast.error("Room is full");
           navigate("/join");
         });
 
         socketref.current.on("connect_failed", handleConnectFailure);
-
-        const storedUser = JSON.parse(localStorage.getItem("user") || "null");
-
-        socketref.current.emit("join", {
-          roomid,
-          name,
-          userId: storedUser?.id,
-        });
 
         socketref.current.on("opponent_code_update", ({ code: nextCode }) => {
           setOpponentCode(nextCode);
@@ -160,8 +168,17 @@ export function useRoom({ roomid, name, locationState, navigate }) {
               player1: { id: p1.id, name: p1.name, socketId: id1 },
               player2: { id: p2.id, name: p2.name, socketId: id2 },
             };
-
+  console.log("room update", newPlayers, p1.totalScore, p2.totalScore);
+  console.log("room update", newPlayers, p1.score, p2.score);
             setPlayers(newPlayers);
+            setScores({
+              player1: p1.totalScore || 0,
+              player2: p2.totalScore || 0,
+            });
+            setTotalScores({
+              player1: p1.totalScore || 0,
+              player2: p2.totalScore || 0,
+            });
             setBothPlayersReady(Object.values(updatedRoom.players).every((player) => player.isReady));
           } else {
             setBothPlayersReady(false);
@@ -210,7 +227,7 @@ export function useRoom({ roomid, name, locationState, navigate }) {
           } else {
             toast.success(`${winnerName} wins this round`);
           }
-
+    console.log("update_leaderboard", winnerId, isTie);
           setRoundScoresFromLeaderboard(winnerId, isTie);
         });
 
@@ -222,6 +239,8 @@ export function useRoom({ roomid, name, locationState, navigate }) {
         socketref.current.on("opponent_ready", ({ message }) => {
           toast(message);
         });
+
+        joinRoom();
       } catch (error) {
         console.error("Failed to initialize socket:", error);
         setConnectionError(true);
@@ -353,8 +372,8 @@ Evaluation steps (MANDATORY):
 5. Check if code is complete and runnable
 
 Scoring rules (STRICT):
-- Wrong logic → marks MUST be below 300
-- Major bugs / incomplete code → below 200
+- Random keywords  → 0 marks
+- Wrong logic → marks below 300
 - Missing edge cases → below 700
 - Inefficient solution → reduce marks
 - ONLY give 900+ if fully correct and optimal
