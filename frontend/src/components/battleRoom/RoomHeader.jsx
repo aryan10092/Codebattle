@@ -10,13 +10,15 @@ export function RoomHeader({ roomid, name, roundInfo, timeLeft }) {
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="bg-black border border-gray-700 p-2 rounded-lg">
+            <a href="/" className="bg-black border border-gray-700 p-2 rounded-lg">
+              
               <Terminal className="h-6 w-6 text-white" />
-            </div>
+            </a>
 
             <div>
-              <h1 className="text-xl font-bold bg-clip-text text-white">Code Battle</h1>
-              <p className="text-xs text-blue-200">Room: {roomid}</p>
+              <a href="/" className="text-xl font-bold bg-clip-text text-white">Code Battle</a>
+              <br/>
+              <a href="/" className="text-xs text-blue-200">Room: {roomid}</a>
             </div>
           </div>
 
