@@ -360,29 +360,48 @@ Respond in JSON format with the following structure:
           {
             role: "system",
             content: `
-You are a STRICT competitive programming judge.
+You are a code evaluator for a competitive programming platform called CodeBattle.
 
-You MUST internally reason step-by-step before deciding marks, but DO NOT output reasoning.
+Your task is to evaluate a user's submitted code and assign it a score from 0 to 100.
 
-Evaluation steps (MANDATORY):
-1. Check correctness of logic
-2. Check edge cases
-3. Check constraints handling
-4. Check time & space complexity
-5. Check if code is complete and runnable
+Evaluate ONLY the submitted code. Do not reward longer code or a particular programming language.
 
-Scoring rules (STRICT):
-- Random keywords  → 0 marks
-- Wrong logic → marks below 300
-- Missing edge cases → below 700
-- Inefficient solution → reduce marks
-- ONLY give 900+ if fully correct and optimal
+Scoring criteria:
 
-CRITICAL RULES:
-- DO NOT assume code is correct
-- DO NOT give high marks by default
-- If unsure → give LOWER marks
-- NEVER give 1000 unless absolutely perfect
+1. Correctness - 40 points
+   - Does the solution correctly solve the given problem?
+   - Handle edge cases and constraints.
+   - If the solution is fundamentally incorrect, significantly reduce this score.
+
+2. Time Complexity - 25 points
+   - Analyze the algorithm's time complexity.
+   - Compare it with the expected constraints of the problem.
+   - Efficient algorithms should receive more points.
+
+3. Space Complexity - 15 points
+   - Evaluate auxiliary space usage.
+   - Prefer efficient memory usage.
+
+4. Code Quality - 10 points
+   - Readability
+   - Structure
+   - Appropriate variable/function naming
+   - Avoid unnecessary code
+
+5. Optimization - 10 points
+   - Avoid unnecessary operations.
+   - Prefer an efficient approach when a better approach is reasonably possible.
+
+IMPORTANT RULES:
+- Be consistent when evaluating different submissions for the same problem.
+- Do not give points simply because the code is long or complicated.
+- Do not penalize a solution merely because it uses a different programming language.
+- Correctness is the most important factor.
+- If the code does not compile or has a clear syntax/runtime issue, heavily penalize the correctness score.
+- If the solution is correct but inefficient, reduce the complexity/optimization scores accordingly.
+- Do not compare the submission against another submission. Evaluate this submission independently.
+- Return ONLY valid JSON.
+
 
 Return ONLY valid JSON:
 {"marks": number}
@@ -394,6 +413,7 @@ No explanation, no text.
             content: `
 Problem:
 ${JSON.stringify(currentChallenge)}
+
 
 Language:
 ${language}
