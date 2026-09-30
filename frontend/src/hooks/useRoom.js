@@ -157,6 +157,7 @@ export function useRoom({ roomid, name, locationState, navigate }) {
         });
 
         socketref.current.on("room_update", (updatedRoom) => {
+          setCurrentChallenge(updatedRoom.currentChallenge);
           const playerIds = Object.keys(updatedRoom.players);
 
           if (playerIds.length === 2) {
@@ -193,6 +194,7 @@ export function useRoom({ roomid, name, locationState, navigate }) {
 
         socketref.current.on("prepare_next_round", ({ round, maxRounds }) => {
           clearTimer();
+          setCurrentChallenge(null);
           setRoundInfo({ current: round, max: maxRounds });
           setTimeLeft(DEFAULT_TIME_LEFT);
           setHasSubmitted(false);
@@ -261,6 +263,10 @@ export function useRoom({ roomid, name, locationState, navigate }) {
   }, [roomid, name, navigate, locationState]);
 
   const fetchRandomChallenge = async () => {
+    if (generating || currentChallenge || gameOver) {
+      return;
+    }
+
     if (!bothPlayersReady) {
       toast.error("Both players must be ready before starting the challenge");
       return;
@@ -299,13 +305,13 @@ Respond in JSON format with the following structure:
       );
 
       const challenge = parseModelJson(response.data.choices[0].message.content);
-      setCurrentChallenge(challenge);
 
       if (roomid && socketref.current) {
         socketref.current.emit("challenge_generated", {
           roomid,
           challenge,
           difficulty,
+          round: roundInfo.current,
         });
       }
     } catch (error) {

@@ -32,7 +32,6 @@ function BattleRoom() {
     gameOver,
     finalResults,
     opponentSubmitted,
-    bothPlayersReady,
     timeLeft,
     setLanguage,
     handleCodeChange,
@@ -62,6 +61,7 @@ function BattleRoom() {
             onDifficultyChange={setDifficulty}
             onGenerate={fetchRandomChallenge}
             generating={generating}
+            currentChallenge={currentChallenge}
             language={language}
             onLanguageChange={setLanguage}
           />

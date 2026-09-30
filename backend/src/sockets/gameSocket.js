@@ -99,6 +99,10 @@ function processRoundResults(io, rooms, room) {
   const roundWinnerId = isTie ? null : players.reduce((max, player) =>
     player.score > max.score ? player : max,
   players[0]).userId;
+ 
+   persistLeaderboardStats(room, players, roundWinnerId, isTie).catch((error) => {
+    console.error(`Failed to persist leaderboard stats for room ${room.id}:`, error);
+  });
 
   if (isTie) {
     players.forEach((player) => {
@@ -146,10 +150,6 @@ function processRoundResults(io, rooms, room) {
       })),
     });
 
-
-  persistLeaderboardStats(room, players, roundWinnerId, isTie).catch((error) => {
-    console.error(`Failed to persist leaderboard stats for room ${room.id}:`, error);
-  });
     io.to(room.id).emit("update_leaderboard", {
       winnerId: roundWinner.id,
       winnerName: roundWinner.name,
@@ -163,7 +163,7 @@ function processRoundResults(io, rooms, room) {
         totalScore: player.totalScore,
       })),
     });
-  }
+  }  
 
   if (room.round >= room.maxRounds) {
     const finalWinner = players.reduce((max, player) =>
@@ -394,7 +394,7 @@ function registerGameSockets(io) {
               player.submitted = true;
               player.score = 0;
             }
-          });
+          })
 
           processRoundResults(io, rooms, room);
         }, ROUND_DURATION);
@@ -458,8 +458,23 @@ function registerGameSockets(io) {
       }
     });
 
-    socket.on("challenge_generated", ({ roomid, challenge, difficulty }) => {
+    socket.on("challenge_generated", ({ roomid, challenge, difficulty, round }) => {
       const room = rooms.get(roomid);
+
+      if (!room || !room.players[socket.id]) {
+        socket.emit("error", { message: "Player not found in room" });
+        return;
+      }
+
+      if (round !== room.round || room.status !== "in-progress") {
+        socket.emit("error", { message: "This round is not active" });
+        return;
+      }
+
+      if (room.currentChallenge) {
+        socket.emit("error", { message: "A challenge has already been generated for this round" });
+        return;
+      }
 
       if (room) {
         room.currentChallenge = challenge;

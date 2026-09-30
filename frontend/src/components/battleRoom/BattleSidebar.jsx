@@ -10,6 +10,7 @@ export function BattleSidebar({
   onDifficultyChange,
   onGenerate,
   generating,
+  currentChallenge,
   language,
   onLanguageChange,
 }) {
@@ -86,7 +87,7 @@ export function BattleSidebar({
 
           <Button
             onClick={onGenerate}
-            disabled={generating}
+            disabled={generating || Boolean(currentChallenge)}
             className="w-full cursor-pointer bg-[#1a1a2e] hover:bg-gray-900 border border-gray-800 text-white shadow-l shadow-gray-500/20 transition-all duration-200"
           >
             {generating ? "Generating..." : "Generate"}
